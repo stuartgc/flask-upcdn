@@ -36,17 +36,18 @@ def url_for(endpoint, **values):
         urls = app.url_map.bind(app.config['CDN_DOMAIN'], url_scheme=scheme)
 
         if app.config['CDN_TIMESTAMP']:
-            path = os.path.join(static_folder, values['filename'])
-            values['t'] = int(os.path.getmtime(path))
+            tstamp = int(os.path.getmtime(path))
+            path = os.path.join(tstamp, static_folder, values['filename'])
+            values['t'] = tstamp
 
         return urls.build(endpoint, values=values, force_external=True)
 
     return flask_url_for(endpoint, **values)
 
 
-class CDN(object):
+class UPCDN(object):
     """
-    The CDN object allows your application to use Flask-CDN.
+    The UPCDN object allows your application to use Flask-CDN.
 
     When initialising a CDN object you may optionally provide your
     :class:`flask.Flask` application object if it is ready. Otherwise,
