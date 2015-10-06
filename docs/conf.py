@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'flask-cdn'
+project = u'flask-upcdn'
 copyright = u'2013, Wichita Code'
 
 # The version info for the project you're documenting, acts as replacement for

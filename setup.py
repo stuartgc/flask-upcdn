@@ -1,5 +1,5 @@
 """
-Flask-CDN
+Flask-UPCDN
 ---------
 
 Serve the static files in your Flask app from a CDN.
@@ -10,7 +10,7 @@ from setuptools import setup
 setup(
     name='Flask-UPCDN',
     version='1.2.1',
-    url='https://github.com/Hearst-DD/flask-cdn.git',
+    url='https://github.com/Hearst-DD/flask-upcdn.git',
     license='MIT',
     author='William Fagan',
     author_email='will@wichitacode.com',

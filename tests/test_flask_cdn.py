@@ -5,7 +5,7 @@ import os
 
 from flask import Flask, render_template_string
 
-from flask.ext.cdn import CDN
+from flask.ext.upcdn import UPCDN
 
 
 class DefaultsTest(unittest.TestCase):
@@ -13,7 +13,7 @@ class DefaultsTest(unittest.TestCase):
         self.app = Flask(__name__)
         self.app.testing = True
 
-        CDN(self.app)
+        UPCDN(self.app)
 
     def test_domain_default(self):
         """ Tests CDN_DOMAIN default value is correctly set. """
@@ -45,7 +45,7 @@ class UrlTests(unittest.TestCase):
             return render_template_string("{{ url_for('b') }}")
 
     def client_get(self, ufs, secure=False):
-        CDN(self.app)
+        UPCDN(self.app)
         client = self.app.test_client()
         if secure:
             return client.get('/%s' % ufs, base_url='https://localhost')

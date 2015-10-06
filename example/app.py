@@ -1,5 +1,5 @@
 from flask import Flask, render_template_string
-from flask.ext.cdn import CDN
+from flask.ext.upcdn import UPCDN
 
 app = Flask(__name__)
 
@@ -7,7 +7,7 @@ app.config['CDN_DOMAIN'] = 'mycdnname.cloudfront.net'
 app.config['CDN_DEBUG'] = True
 app.config['CDN_HTTPS'] = True
 
-CDN(app)
+UPCDN(app)
 
 
 @app.route('/')

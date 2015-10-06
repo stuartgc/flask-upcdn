@@ -1,4 +1,4 @@
-# Flask-CDN ![Version][Version] ![Build Status][Build] ![Coverage Status][Coverage]
+# Flask-UPCDN ![Version][Version] ![Build Status][Build] ![Coverage Status][Coverage]
 
 [Version]: https://img.shields.io/pypi/v/flask-cdn.svg
 [Build]: https://travis-ci.org/wichitacode/flask-cdn.png
