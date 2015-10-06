@@ -25,7 +25,7 @@ class DefaultsTest(unittest.TestCase):
 
     def test_timestamp_default(self):
         """ Tests CDN_TIMESTAMP default value is correctly set. """
-        self.assertEquals(self.app.config['CDN_TIMESTAMP'], True)
+        self.assertEquals(self.app.config['CDN_TIMESTAMP'], None)
 
 
 class UrlTests(unittest.TestCase):
@@ -34,7 +34,7 @@ class UrlTests(unittest.TestCase):
         self.app.testing = True
 
         self.app.config['CDN_DOMAIN'] = 'mycdnname.cloudfront.net'
-        self.app.config['CDN_TIMESTAMP'] = False
+        self.app.config['CDN_TIMESTAMP'] = None
 
         @self.app.route('/<url_for_string>')
         def a(url_for_string):
@@ -96,13 +96,12 @@ class UrlTests(unittest.TestCase):
         """ Tests CDN_TIMESTAMP correctly affects generated URLs. """
         ufs = "{{ url_for('static', filename='bah.js') }}"
 
-        self.app.config['CDN_TIMESTAMP'] = True
+        self.app.config['CDN_TIMESTAMP'] = "1234"
         path = os.path.join(self.app.static_folder, 'bah.js')
-        ts = int(os.path.getmtime(path))
-        exp = 'http://mycdnname.cloudfront.net/static/bah.js?t={0}'.format(ts)
+        exp = 'http://mycdnname.cloudfront.net/{0}/static/bah.js'.format(self.app.config['CDN_TIMESTAMP'])
         self.assertEquals(self.client_get(ufs).get_data(True), exp)
 
-        self.app.config['CDN_TIMESTAMP'] = False
+        self.app.config['CDN_TIMESTAMP'] = None
         exp = 'http://mycdnname.cloudfront.net/static/bah.js'
         self.assertEquals(self.client_get(ufs).get_data(True), exp)
 

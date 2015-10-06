@@ -1,4 +1,4 @@
-import os
+import os, logging
 
 from flask import url_for as flask_url_for
 from flask import current_app, request
@@ -33,12 +33,13 @@ def url_for(endpoint, **values):
         if request.blueprint is not None:
             static_folder = app.blueprints[request.blueprint].static_folder
 
-        urls = app.url_map.bind(app.config['CDN_DOMAIN'], url_scheme=scheme)
+        domain = app.config['CDN_DOMAIN']
 
-        if app.config['CDN_TIMESTAMP']:
-            tstamp = int(os.path.getmtime(path))
-            path = os.path.join(tstamp, static_folder, values['filename'])
-            values['t'] = tstamp
+        if app.config['CDN_TIMESTAMP'] is not None:
+            domain = domain + "/"
+            domain = domain + str(app.config['CDN_TIMESTAMP'])
+
+        urls = app.url_map.bind(domain, url_scheme=scheme)
 
         return urls.build(endpoint, values=values, force_external=True)
 
@@ -71,7 +72,7 @@ class UPCDN(object):
     def init_app(self, app):
         defaults = [('CDN_DOMAIN', None),
                     ('CDN_HTTPS', None),
-                    ('CDN_TIMESTAMP', True)]
+                    ('CDN_TIMESTAMP', None)]
 
         for k, v in defaults:
             app.config.setdefault(k, v)
